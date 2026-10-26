@@ -1,0 +1,101 @@
+{
+  "server_tag": "LUCIOUS",
+  "command_prefixes": [
+    "/",
+    "!"
+  ],
+  "modules": {
+    "lucious.security": true
+  },
+  "roles": {
+    "owner": {
+      "level": 100,
+      "members": [
+        "a-a19262415"
+      ]
+    },
+    "admin": {
+      "level": 80,
+      "members": []
+    },
+    "moderator": {
+      "level": 50,
+      "members": []
+    },
+    "vip": {
+      "level": 10,
+      "members": []
+    }
+  },
+  "security": {
+    "staff_bypass_level": 50,
+    "require_account": true,
+    "account_wait_seconds": 10,
+    "max_players_per_client": 2,
+    "kick_cooldown_seconds": 60,
+    "warn_limit": 3,
+    "warn_ban_minutes": 30,
+    "lockdown": false,
+    "lockdown_min_level": 10,
+    "lockdown_allow_known_players": true,
+    "rejoin_flood": {
+      "joins": 4,
+      "window": 60,
+      "ban_minutes": 10
+    },
+    "names": {
+      "min_length": 2,
+      "max_length": 32,
+      "banned_patterns": [
+        "admin",
+        "owner",
+        "moderator"
+      ],
+      "protected_names": [],
+      "block_impersonation": true
+    },
+    "chat": {
+      "max_length": 120,
+      "rate": {
+        "messages": 5,
+        "window": 6
+      },
+      "duplicate": {
+        "count": 3,
+        "window": 30
+      },
+      "caps": {
+        "min_length": 10,
+        "max_ratio": 0.75
+      },
+      "block_links": true,
+      "link_whitelist": [],
+      "bad_words": [],
+      "bad_word_action": "censor"
+    },
+    "strikes": {
+      "decay_minutes": 30,
+      "ladder": [
+        {
+          "at": 2,
+          "action": "warn"
+        },
+        {
+          "at": 3,
+          "action": "mute",
+          "minutes": 5
+        },
+        {
+          "at": 5,
+          "action": "kick"
+        },
+        {
+          "at": 7,
+          "action": "tempban",
+          "minutes": 60
+        }
+      ]
+    },
+    "discord_webhook": ""
+  }
+}
