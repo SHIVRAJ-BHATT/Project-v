@@ -164,12 +164,8 @@ def _ping_check() -> None:
             except Exception:
                 pass
         if kick > 0 and ping > kick and n >= limit:
-            try:
-                from lucious.roles import level_of_client
-                if int(level_of_client(cid)) >= 50:
-                    continue
-            except Exception:
-                pass
+            if kit.level_of(cid) >= 50:
+                continue
             try:
                 bs.disconnect_client(cid, ban_time=60.0)
                 kit.say(f'LagBot: {kit.name_of(cid)} removed for very '

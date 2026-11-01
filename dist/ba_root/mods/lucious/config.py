@@ -31,7 +31,7 @@ DEFAULTS: dict[str, Any] = {
         'features.LuciousLightGuard': True, 'features.LuciousFluor': True, 'features.LuciousStats': True, 
         'features.LuciousOverhead': True, 'features.LuciousRing': True,'features.LuciousAntiLag': True,
         'features.LuciousQuiz': True, 'features.LuciousMiniMaps': True, 'features.LuciousRules': True,
-        'features.LuciousTop5': True,
+        'features.LuciousTop5': True, 'features.LuciousStaff': True, 'features.LuciousCheats': True,
     },
     'roles': {
         'owner': {'level': 100, 'members': []},

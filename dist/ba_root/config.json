@@ -103,7 +103,7 @@
    "Complete": false
   },
   "Team Player": {
-   "Complete": false
+   "Complete": true
   },
   "The Great Wall": {
    "Complete": false
@@ -161,14 +161,14 @@
  "Fleet Zone Pings": {
   "prod": {
    "buenos_aires.v4": 331.51268697110936,
-   "delhi.v4": 21.904330720636437,
-   "hyderabad.v4": 13.408022624050261,
+   "delhi.v4": 22.13106682208783,
+   "hyderabad.v4": 13.556541530048197,
    "kolkata.v4": 36.263482362895154,
-   "mumbai.v4": 2.8270305871448453
+   "mumbai.v4": 1.0324126360847532
   }
  },
  "Fleet Zone Pings Updated Time": {
-  "prod": 1793512915
+  "prod": 1793536980
  },
  "Free-for-All Playlist Randomize": true,
  "Free-for-All Playlist Selection": "__default__",

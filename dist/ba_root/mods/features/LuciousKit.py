@@ -154,13 +154,21 @@ def players_online() -> int:
     return len([r for r in roster() if r.get('client_id') != -1])
 
 
-def staff(ctx: Any, level: int = 80) -> bool:
-    cid = getattr(ctx, 'client_id', None)
+def level_of(cid: Any) -> int:
     if cid == -1:
-        return True
+        return 1000
     try:
         from lucious.roles import level_of_client
-        return int(level_of_client(cid)) >= level
+        return int(level_of_client(cid, account_of(cid)))
+    except Exception:
+        return 0
+
+
+def staff(ctx: Any, level: int = 80) -> bool:
+    if getattr(ctx, 'client_id', None) == -1:
+        return True
+    try:
+        return int(getattr(ctx, 'level', 0)) >= level
     except Exception:
         return False
 

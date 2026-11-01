@@ -1,12 +1,14 @@
 # Released under the MIT License. See LICENSE for details.
 # ba_meta require api 9
-"""Lucious Quiz Bot - easy daily-life questions + server questions.
+"""Lucious Quiz Bot v2 - fast, easy daily-life + server questions.
 
-A question is asked every `interval` seconds. Answer with /a <answer>
-(always works) or just type it in chat (best effort). First correct wins.
-Commands: /quiz [top|me]  /a <answer>  and staff: /quiz now|skip|on|off|
-          add <question> | <answer>[, alias...]
-Config (config.json -> "quiz"): server_questions = [[question, [answers]]]
+First question 15 s after start, then every `interval` seconds (60).
+A new game can pull the next question forward to ~20 s.
+Answer with /a <answer> (always works) or just type it in chat.
+Commands: /quiz [top|me]  /a <answer>
+Staff:    /quiz now|skip|on|off|speed <sec>|add <question> | <answer>, <alias>
+Config (config.json -> "quiz"): interval, first_delay, on_game_start,
+          answer_time, min_players, points, chat_answers, server_questions
 """
 
 from __future__ import annotations
@@ -25,7 +27,9 @@ _P = 'quiz'
 
 DEFAULTS = {
     'enabled': True,
-    'interval': 240.0,
+    'interval': 60.0,
+    'first_delay': 15.0,
+    'on_game_start': True,
     'answer_time': 30.0,
     'min_players': 1,
     'points': 10,
@@ -53,22 +57,34 @@ BANK = [
     ('What is 100 - 45?', ['55']),
     ('What is 8 x 8?', ['64']),
     ('What is half of 50?', ['25']),
+    ('What is 6 x 7?', ['42']),
+    ('What is 15 + 15?', ['30', 'thirty']),
     ('Which animal says meow?', ['cat']),
     ('Which animal says woof?', ['dog']),
     ('Which animal gives us milk?', ['cow']),
+    ('Which animal has a long trunk?', ['elephant']),
     ('Which fruit keeps the doctor away?', ['apple']),
+    ('Which fruit is yellow and curved?', ['banana']),
     ('What is frozen water called?', ['ice']),
     ('What do you use to brush your teeth?', ['toothbrush', 'brush']),
+    ('What do we use to write on paper?', ['pen', 'pencil']),
     ('Which planet do we live on?', ['earth']),
+    ('Which planet is known as the Red Planet?', ['mars']),
     ('Which star gives us light in the day?', ['sun']),
     ('Which month comes after March?', ['april']),
     ('Which day comes after Friday?', ['saturday']),
     ('What is the opposite of hot?', ['cold']),
     ('What is the opposite of up?', ['down']),
+    ('What is the opposite of day?', ['night']),
     ('How many hours are in one day?', ['24', 'twenty four']),
     ('How many minutes are in one hour?', ['60', 'sixty']),
     ('How many seconds are in one minute?', ['60', 'sixty']),
+    ('How many fingers are on one hand?', ['5', 'five']),
+    ('How many days are in February in a normal year?',
+     ['28', 'twenty eight']),
+    ('How many legs does a cat have?', ['4', 'four']),
     ('What is the capital of India?', ['delhi', 'new delhi']),
+    ('What is the capital of France?', ['paris']),
     ('What is the national animal of India?', ['tiger', 'bengal tiger']),
     ('What is the national bird of India?', ['peacock']),
     ('Which festival is called the festival of lights?', ['diwali']),
@@ -77,21 +93,27 @@ BANK = [
     ('What is the currency of India?', ['rupee', 'rupees', 'inr']),
     ('How many colors are in a rainbow?', ['7', 'seven']),
     ('What do you wear on your feet?', ['shoes', 'shoe', 'socks', 'sandals']),
+    ('What color is grass?', ['green']),
     ('Which meal do we eat in the morning?', ['breakfast']),
     ('What do we call a baby dog?', ['puppy']),
     ('What do we call a baby cat?', ['kitten']),
+    ('What do we call the person who teaches in school?', ['teacher']),
     ('Which animal is called the king of the jungle?', ['lion']),
     ('Which is the largest animal on land?', ['elephant']),
     ('Which is the tallest animal?', ['giraffe']),
+    ('Which is the biggest ocean?', ['pacific', 'pacific ocean']),
     ('What do plants need from the sun to make food?',
      ['sunlight', 'light', 'sun']),
     ('Which gas do humans breathe in to live?', ['oxygen']),
     ('Which liquid do we drink every day?', ['water']),
+    ('Which drink comes from cows?', ['milk']),
     ('In which direction does the sun rise?', ['east']),
     ('In which direction does the sun set?', ['west']),
+    ('Which direction is opposite of north?', ['south']),
     ('How many sides does a triangle have?', ['3', 'three']),
     ('How many sides does a square have?', ['4', 'four']),
     ('How many wheels does a bicycle have?', ['2', 'two']),
+    ('How many zeros are in one hundred?', ['2', 'two']),
     ('Which vehicle flies in the sky?', ['airplane', 'plane', 'aeroplane']),
     ('What do we look at to see the time?', ['clock', 'watch']),
     ('What is the first letter of the English alphabet?', ['a']),
@@ -102,6 +124,8 @@ BANK = [
      ['pharmacy', 'medical', 'medical store', 'chemist']),
     ('What game is this server for?', ['bombsquad', 'bomb squad']),
     ('Which BombSquad bomb freezes players?', ['ice', 'ice bomb']),
+    ('Which BombSquad bomb explodes when it touches something?',
+     ['impact', 'impact bomb']),
     ('Which BombSquad powerup protects you?', ['shield']),
     ('Which BombSquad powerup heals you?', ['health', 'health pack']),
     ('How many bombs does the triple bomb powerup give?', ['3', 'three']),
@@ -117,6 +141,7 @@ class _State:
     qid = 0
     ticker = None
     scores: dict = {}
+    next_at = 0.0
 
 
 S = _State()
@@ -124,6 +149,10 @@ S = _State()
 
 def _c(key):
     return kit.cfg(_P, DEFAULTS, key)
+
+
+def _schedule(delay: float) -> None:
+    S.next_at = bs.apptime() + max(1.0, float(delay))
 
 
 def _norm(text: str) -> str:
@@ -139,7 +168,14 @@ def _match(text: str, answers: list) -> bool:
         a = _norm(a)
         if not a:
             continue
-        if t == a or (' ' in a and a in t) or (' ' not in a and a in toks):
+        if t == a:
+            return True
+        if len(a) <= 2 or a.isdigit():
+            continue            # short / numeric answers: whole message only
+        if ' ' in a:
+            if a in t:
+                return True
+        elif a in toks:
             return True
     return False
 
@@ -193,6 +229,7 @@ def _timeout(qid: int) -> None:
     if S.active and S.active['id'] == qid:
         ans = S.active['a'][0]
         S.active = None
+        _schedule(float(_c('interval')))
         kit.say(f'Time up! The answer was: {ans}', (1.0, 0.6, 0.4))
 
 
@@ -209,6 +246,7 @@ def _win(key: str, name: str) -> None:
     row['wins'] += 1
     kit.save_json('quiz_scores.json', S.scores)
     S.active = None
+    _schedule(float(_c('interval')))
     kit.say(f'\ue043 {name} got it! Answer: {act["a"][0]}  +{pts} pts '
             f'(total {row["points"]})', (0.5, 1.0, 0.6))
 
@@ -221,34 +259,32 @@ def _try_answer(cid, text: str) -> bool:
     return True
 
 
-def _periodic() -> None:
+def _tick() -> None:
     if not _c('enabled') or S.active is not None:
         return
-    if kit.players_online() >= int(_c('min_players')):
-        _ask()
-
-
-_UID = re.compile(r'^(pb|a)-', re.I)
-
-
-def _on_chat(*args, **kw) -> None:
-    if S.active is None or not _c('chat_answers'):
+    if bs.apptime() < S.next_at:
         return
-    msg = kw.get('msg') or kw.get('message') or kw.get('text')
-    cid = kw.get('client_id', kw.get('cid'))
-    for a in args:
-        if isinstance(a, bool):
-            continue
-        if isinstance(a, int) and cid is None:
-            cid = a
-        elif isinstance(a, str) and not a.startswith('/') \
-                and not _UID.match(a) and not msg:
-            msg = a
-    if msg and cid is not None:
-        try:
-            _try_answer(cid, str(msg))
-        except Exception:
-            _LOG.exception('Quiz: chat answer failed')
+    if kit.players_online() < int(_c('min_players')):
+        return
+    _ask()
+
+
+def _on_begin(*_a, **_k) -> None:
+    if _c('on_game_start') and S.active is None:
+        S.next_at = min(S.next_at, bs.apptime() + 20.0)
+
+
+def _on_chat(msg, client_id=None, *_rest):
+    """Chat filter. It MUST hand the message back, or the chat is blocked."""
+    try:
+        if (S.active is not None and _c('chat_answers')
+                and isinstance(msg, str)
+                and client_id not in (None, -1)
+                and not msg.lstrip().startswith(('/', '!'))):
+            _try_answer(client_id, msg)
+    except Exception:
+        _LOG.exception('Quiz: chat answer failed')
+    return msg
 
 
 def _cmd_answer(ctx) -> None:
@@ -267,7 +303,8 @@ def _cmd_answer(ctx) -> None:
 def _cmd_quiz(ctx) -> None:
     args = [str(a) for a in (getattr(ctx, 'args', None) or [])]
     sub = args[0].lower() if args else 'info'
-    if sub in ('now', 'skip', 'on', 'off', 'add') and not kit.staff(ctx):
+    if sub in ('now', 'skip', 'on', 'off', 'add', 'speed') \
+            and not kit.staff(ctx):
         kit.reply(ctx, 'Staff only.')
         return
     if sub == 'now':
@@ -280,6 +317,15 @@ def _cmd_quiz(ctx) -> None:
     elif sub in ('on', 'off'):
         kit.set_cfg(_P, 'enabled', sub == 'on')
         kit.reply(ctx, f'Quiz {sub}.')
+    elif sub == 'speed':
+        try:
+            sec = max(15.0, min(3600.0, float(args[1])))
+        except (IndexError, ValueError):
+            kit.reply(ctx, 'Usage: /quiz speed <15-3600 seconds>')
+            return
+        kit.set_cfg(_P, 'interval', sec)
+        S.next_at = min(S.next_at, bs.apptime() + sec)
+        kit.reply(ctx, f'A question now comes every {int(sec)}s.')
     elif sub == 'add':
         raw = ' '.join(args[1:])
         if '|' not in raw:
@@ -315,8 +361,10 @@ def _cmd_quiz(ctx) -> None:
 def setup() -> None:
     S.scores = kit.load_json('quiz_scores.json', {})
     S.active = None
-    S.ticker = bs.AppTimer(float(_c('interval')), _periodic, repeat=True)
+    _schedule(float(_c('first_delay')))
+    S.ticker = bs.AppTimer(3.0, _tick, repeat=True)
     kit.on('chat', _on_chat, priority=40)
+    kit.on('activity_begin', _on_begin, priority=95)
     kit.add_command('quiz', _cmd_quiz, level=0)
     kit.add_command('a', _cmd_answer, level=0)
     kit.add_command('answer', _cmd_answer, level=0)
@@ -327,3 +375,4 @@ def teardown() -> None:
     S.qid += 1
     S.active = None
     kit.off('chat', _on_chat)
+    kit.off('activity_begin', _on_begin)

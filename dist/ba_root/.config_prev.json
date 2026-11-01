@@ -103,7 +103,7 @@
    "Complete": false
   },
   "Team Player": {
-   "Complete": false
+   "Complete": true
   },
   "The Great Wall": {
    "Complete": false
@@ -152,7 +152,7 @@
   "\ue043ROBIN\ue043"
  ],
  "Default Player Profiles": {
-  "Client Input Device #1": "MIHIR:)",
+  "Client Input Device #1": "__account__",
   "Client Input Device #2": "__account__",
   "Client Input Device #3": "\ud83c\udf38\u0240\uaa96\ud835\ude33\uaa96\ud83c\udf38"
  },
@@ -160,13 +160,13 @@
  "Fleet Zone Ping Last Flush Time": 1793448646,
  "Fleet Zone Pings": {
   "prod": {
-   "delhi.v4": 22.23601473782432,
-   "hyderabad.v4": 13.438196289568598,
-   "mumbai.v4": 1.3585000548200727
+   "delhi.v4": 22.04674213409037,
+   "hyderabad.v4": 13.521321582481534,
+   "mumbai.v4": 1.0132055355829646
   }
  },
  "Fleet Zone Pings Updated Time": {
-  "prod": 1793512832
+  "prod": 1793536957
  },
  "Free-for-All Playlist Randomize": true,
  "Free-for-All Playlist Selection": "__default__",
