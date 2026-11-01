@@ -41,6 +41,19 @@ class Ctx:
 
 
 _registry: dict[str, Command] = {}
+ACCESS_PROVIDERS: list = []   # fn(account, command_name) -> bool
+
+
+def _allowed(account, name: str) -> bool:
+    for p in ACCESS_PROVIDERS:
+        try:
+            if p(account, name):
+                return True
+        except Exception:
+            log.exception('[Lucious] access provider crashed')
+    return False
+
+
 _last_use: dict[int, float] = {}
 _NAME_RE = re.compile(r'^[a-z][a-z0-9_]*$')
 
@@ -69,6 +82,8 @@ def remove_owner(prefix: str) -> None:
     for key in [k for k, c in _registry.items()
                 if c.owner == prefix or c.owner.startswith(prefix + '.')]:
         del _registry[key]
+    ACCESS_PROVIDERS[:] = [p for p in ACCESS_PROVIDERS if not (
+        p.__module__ == prefix or p.__module__.startswith(prefix + '.'))]
 
 
 def chat_filter(msg: str, client_id: int):
@@ -94,7 +109,7 @@ def chat_filter(msg: str, client_id: int):
     _last_use[client_id] = now
     account = utils.account_of(client_id)
     level = roles.level_of_client(client_id, account)
-    if level < cmd.level:
+    if level < cmd.level and not _allowed(account, cmd.name):
         utils.tell(client_id, 'You do not have permission.', utils.RED)
         return None
     ctx = Ctx(client_id, account, level, utils.name_of(client_id), args, msg)

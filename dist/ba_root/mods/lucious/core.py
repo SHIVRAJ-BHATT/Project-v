@@ -10,7 +10,7 @@ from lucious import __version__, commands, config, hooks
 from lucious.events import bus
 
 log = logging.getLogger('lucious')
-CORE_MODULES = ('lucious.builtin',)
+CORE_MODULES =('lucious.builtin','lucious.doctor')
 STATE: dict[str, dict] = {}
 
 

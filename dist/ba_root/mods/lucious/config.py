@@ -17,7 +17,22 @@ CONFIG_PATH = os.path.join(DATA_DIR, 'config.json')
 DEFAULTS: dict[str, Any] = {
     'server_tag': 'LUCIOUS',
     'command_prefixes': ['/', '!'],
-    'modules': {'lucious.security': True},
+    'modules': {
+        'lucious.security': True, 'lucious.roles': True,
+        'lucious.anticheat': True, 'lucious.economy': True,
+        'features.Luciouswintermode': True, 'features.LuciousTextonmap': True,
+        'features.LuciousCeremony': True, 'lucious.tags': True, 'lucious.ownercmds': True,
+        'features.LuciousMapBG': True, 'features.LuciousCharacterChooser': True,
+        'features.LuciousBlast': True, 'features.LuciousCreativePowerups': True,
+        'features.LuciousMapLights': True, 'features.LuciousWavedash': True,
+        'features.LuciousCustomCharacters': True, 'features.LuciousUFO': True,
+        'features.LuciousCommands': True, 'features.LuciousMaps': True, 
+        'features.LuciousPowerups': True, 'features.LuciousVolleyball': True,
+        'features.LuciousLightGuard': True, 'features.LuciousFluor': True, 'features.LuciousStats': True, 
+        'features.LuciousOverhead': True, 'features.LuciousRing': True,'features.LuciousAntiLag': True,
+        'features.LuciousQuiz': True, 'features.LuciousMiniMaps': True, 'features.LuciousRules': True,
+        'features.LuciousTop5': True,
+    },
     'roles': {
         'owner': {'level': 100, 'members': []},
         'admin': {'level': 80, 'members': []},

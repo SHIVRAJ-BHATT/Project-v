@@ -153,19 +153,22 @@
  ],
  "Default Player Profiles": {
   "Client Input Device #1": "__account__",
-  "Client Input Device #2": "||R.O.B.I.N||"
+  "Client Input Device #2": "__account__",
+  "Client Input Device #3": "\ud83c\udf38\u0240\uaa96\ud835\ude33\uaa96\ud83c\udf38"
  },
  "FFA Series Length": 24,
- "Fleet Zone Ping Last Flush Time": 1793016633,
+ "Fleet Zone Ping Last Flush Time": 1793448646,
  "Fleet Zone Pings": {
   "prod": {
-   "delhi.v4": 22.757072160200412,
-   "hyderabad.v4": 14.109746822322322,
-   "mumbai.v4": 1.1963235277826352
+   "buenos_aires.v4": 331.51268697110936,
+   "delhi.v4": 21.904330720636437,
+   "hyderabad.v4": 13.408022624050261,
+   "kolkata.v4": 36.263482362895154,
+   "mumbai.v4": 2.8270305871448453
   }
  },
  "Fleet Zone Pings Updated Time": {
-  "prod": 1793018172
+  "prod": 1793512915
  },
  "Free-for-All Playlist Randomize": true,
  "Free-for-All Playlist Selection": "__default__",
@@ -192,13 +195,258 @@
    "enabled": true
   }
  },
- "Port": 43210,
+ "Port": 43211,
  "SceneV1 Host Protocol": 56,
  "Show Tutorial": false,
  "Signed In Last Session": false,
  "Team Tournament Playlist Randomize": true,
  "Team Tournament Playlist Selection": "ROWhitz Death match ",
  "Team Tournament Playlists": {
+  "Lucious Death Match EPIC TEAMS": [
+   {
+    "settings": {
+     "Balance Total Lives": true,
+     "Epic Mode": true,
+     "Lives Per Player": 2,
+     "Time Limit": 0,
+     "map": "The Pad"
+    },
+    "type": "kill_or_die_api9.KillOrDieGame"
+   },
+   {
+    "settings": {
+     "Epic Mode": true,
+     "Kills to Win Per Player": 7,
+     "Respawn Times": 1.0,
+     "Time Limit": 0,
+     "map": "\ue043Botton Rampage"
+    },
+    "type": "bascenev1lib.game.deathmatch.DeathMatchGame"
+   },
+   {
+    "settings": {
+     "Epic Mode": true,
+     "Kills to Win Per Player": 7,
+     "Respawn Times": 1.0,
+     "Time Limit": 0,
+     "map": "\ue019Space Thoughts"
+    },
+    "type": "bascenev1lib.game.deathmatch.DeathMatchGame"
+   },
+   {
+    "settings": {
+     "Epic Mode": true,
+     "Kills to Win Per Player": 7,
+     "Respawn Times": 1.0,
+     "Time Limit": 0,
+     "map": "\ue019Island Mine"
+    },
+    "type": "bascenev1lib.game.deathmatch.DeathMatchGame"
+   },
+   {
+    "settings": {
+     "Epic Mode": true,
+     "Kills to Win Per Player": 7,
+     "Respawn Times": 1.0,
+     "Time Limit": 0,
+     "map": "The Cyborg Pad"
+    },
+    "type": "bascenev1lib.game.deathmatch.DeathMatchGame"
+   },
+   {
+    "settings": {
+     "Epic Mode": true,
+     "Kills to Win Per Player": 7,
+     "Respawn Times": 1.0,
+     "Time Limit": 0,
+     "map": "Paradisee"
+    },
+    "type": "bascenev1lib.game.deathmatch.DeathMatchGame"
+   },
+   {
+    "settings": {
+     "Epic Mode": true,
+     "Kills to Win Per Player": 7,
+     "Respawn Times": 1.0,
+     "Time Limit": 0,
+     "map": "\ue019The Arena"
+    },
+    "type": "bascenev1lib.game.deathmatch.DeathMatchGame"
+   },
+   {
+    "settings": {
+     "Epic Mode": true,
+     "Kills to Win Per Player": 7,
+     "Respawn Times": 1.0,
+     "Time Limit": 0,
+     "map": "\ue019Powerups Factory"
+    },
+    "type": "bascenev1lib.game.deathmatch.DeathMatchGame"
+   },
+   {
+    "settings": {
+     "Epic Mode": true,
+     "Kills to Win Per Player": 7,
+     "Respawn Times": 1.0,
+     "Time Limit": 0,
+     "map": "\ue019Neo Zone"
+    },
+    "type": "bascenev1lib.game.deathmatch.DeathMatchGame"
+   },
+   {
+    "settings": {
+     "Disable Bombs": true,
+     "Disable Punch": true,
+     "Enable Bottom Credits": true,
+     "Epic Mode": true,
+     "Icy Floor": true,
+     "Night Mode": true,
+     "Respawn Times": 1.0,
+     "Score to Win": 7,
+     "Time Limit": 0,
+     "map": "Open Field"
+    },
+    "type": "VolleyBall.VolleyBallGame"
+   },
+   {
+    "settings": {
+     "Enable Pickup": true,
+     "Enable Powerups": true,
+     "Epic Mode": true,
+     "Icy Ground": true,
+     "Invincible Players": true,
+     "Respawn Times": 0.5,
+     "Score to Win": 10,
+     "Time Limit": 600,
+     "map": "Football Stadium"
+    },
+    "type": "soccer-ultimate.HockeyGame"
+   },
+   {
+    "settings": {
+     "Epic Mode": true,
+     "Kills to Win Per Player": 5,
+     "Respawn Times": 0.25,
+     "Time Limit": 0,
+     "map": "Courtyard"
+    },
+    "type": "bascenev1lib.game.deathmatch.DeathMatchGame"
+   },
+   {
+    "settings": {
+     "Epic Mode": true,
+     "Kills to Win Per Player": 5,
+     "Respawn Times": 0.25,
+     "Time Limit": 0,
+     "map": "Monkey Face"
+    },
+    "type": "bascenev1lib.game.deathmatch.DeathMatchGame"
+   },
+   {
+    "settings": {
+     "Epic Mode": true,
+     "Kills to Win Per Player": 7,
+     "Respawn Times": 1.0,
+     "Time Limit": 0,
+     "map": "\ue019The Limbo"
+    },
+    "type": "bascenev1lib.game.deathmatch.DeathMatchGame"
+   },
+   {
+    "settings": {
+     "Epic Mode": true,
+     "Model Type": 1,
+     "Respawn Times": 1.0,
+     "TNT Hitpoints": 15000,
+     "Time Limit": 0,
+     "map": "Football Stadium"
+    },
+    "type": "tntbox-api9.TNTTeamGame"
+   },
+   {
+    "settings": {
+     "Epic Mode": true,
+     "Kills to Win Per Player": 5,
+     "Respawn Times": 0.25,
+     "Time Limit": 0,
+     "map": "Rampage"
+    },
+    "type": "bascenev1lib.game.deathmatch.DeathMatchGame"
+   },
+   {
+    "settings": {
+     "Epic Mode": true,
+     "Kills to Win Per Player": 5,
+     "Respawn Times": 0.25,
+     "Time Limit": 0,
+     "map": "Roundabout"
+    },
+    "type": "bascenev1lib.game.deathmatch.DeathMatchGame"
+   },
+   {
+    "settings": {
+     "Blue Tiles (Bouncy - Launches You)": true,
+     "Bombs": false,
+     "Cyan Tiles (Icy - Very Slippery)": true,
+     "Entire Team Must Finish": false,
+     "Epic Mode": true,
+     "Grabbing": true,
+     "Green Tiles (Solid - Always Safe)": true,
+     "Grid Depth": 3,
+     "Grid Width": 6,
+     "Hazards": 0,
+     "Memory Mode (Colors Fade Back)": true,
+     "Orange Tiles (Rumble - Falls & Respawns)": true,
+     "Player Collisions": true,
+     "Punching": false,
+     "Red Tile Respawn": true,
+     "Tile Gap": 0.5,
+     "Tile Labels": true,
+     "map": "Rumble Course"
+    },
+    "type": "rumble_rush_api9_v1-3.RumbleRushGame"
+   },
+   {
+    "settings": {
+     "Epic Mode": true,
+     "Kills to Win Per Player": 5,
+     "Respawn Times": 0.25,
+     "Time Limit": 0,
+     "map": "Bridgit"
+    },
+    "type": "bascenev1lib.game.deathmatch.DeathMatchGame"
+   },
+   {
+    "settings": {
+     "Epic Mode": true,
+     "Kills to Win Per Player": 5,
+     "Respawn Times": 0.25,
+     "Time Limit": 0,
+     "map": "The Pad"
+    },
+    "type": "bascenev1lib.game.deathmatch.DeathMatchGame"
+   },
+   {
+    "settings": {
+     "Epic Mode": true,
+     "Kills to Win Per Player": 5,
+     "Respawn Times": 0.25,
+     "Time Limit": 0,
+     "map": "Football Stadium"
+    },
+    "type": "bascenev1lib.game.deathmatch.DeathMatchGame"
+   },
+   {
+    "settings": {
+     "Epic Mode": true,
+     "Respawn Times": 1.0,
+     "Score to Win": 7,
+     "Time Limit": 0,
+     "map": "Football Stadium"
+    },
+    "type": "bascenev1lib.game.football.FootballTeamGame"
+   }
+  ],
   "ROWhitz Death match ": [
    {
     "settings": {
@@ -274,7 +522,7 @@
  },
  "Teams Series Length": 7,
  "Use Native Python REPL": false,
- "launchCount": 6,
+ "launchCount": 31,
  "lc14173": 1,
  "lc14292": 1
 }

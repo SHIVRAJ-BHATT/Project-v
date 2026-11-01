@@ -5,26 +5,76 @@
     "!"
   ],
   "modules": {
-    "lucious.security": true
+    "lucious.security": true,
+    "lucious.roles": true,
+    "lucious.anticheat": true,
+    "lucious.economy": true,
+    "features.Luciouswintermode": true,
+    "features.LuciousTextonmap": true,
+    "features.LuciousCeremony": true,
+    "lucious.tags": true,
+    "lucious.ownercmds": true,
+    "features.LuciousMapBG": true,
+    "features.LuciousCharacterChooser": true,
+    "features.LuciousBlast": true,
+    "features.LuciousCreativePowerups": true,
+    "features.LuciousMapLights": true,
+    "features.LuciousWavedash": true,
+    "features.LuciousCustomCharacters": true,
+    "features.LuciousUFO": true,
+    "features.LuciousCommands": true,
+    "features.LuciousMaps": true,
+    "features.LuciousPowerups": true,
+    "features.LuciousVolleyball": true,
+    "features.LuciousLightGuard": true,
+    "features.LuciousFluor": true,
+    "features.LuciousStats": true,
+    "features.LuciousOverhead": true,
+    "features.LuciousRing": true,
+    "features.LuciousAntiLag": true,
+    "features.LuciousQuiz": true,
+    "features.LuciousMiniMaps": true,
+    "features.LuciousRules": true,
+    "features.LuciousTop5": true,
+    "features.LuciousMusic": true
   },
   "roles": {
     "owner": {
       "level": 100,
       "members": [
         "a-a19262415"
-      ]
+      ],
+      "tag": "[OWNER]"
     },
     "admin": {
       "level": 80,
-      "members": []
+      "members": [],
+      "tag": "[ADMIN]",
+      "tagcolor": [
+        1.0,
+        0.35,
+        0.35
+      ]
     },
     "moderator": {
       "level": 50,
-      "members": []
+      "members": [],
+      "tag": "[MOD]",
+      "tagcolor": [
+        0.4,
+        1.0,
+        0.5
+      ]
     },
     "vip": {
       "level": 10,
-      "members": []
+      "members": [],
+      "tag": "[VIP]",
+      "tagcolor": [
+        1.0,
+        0.85,
+        0.3
+      ]
     }
   },
   "security": {
@@ -70,7 +120,11 @@
       },
       "block_links": true,
       "link_whitelist": [],
-      "bad_words": [],
+      "bad_words": [
+        "choot",
+        "bsdk",
+        "mc"
+      ],
       "bad_word_action": "censor"
     },
     "strikes": {
@@ -97,5 +151,18 @@
       ]
     },
     "discord_webhook": ""
+  },
+  "winter": {
+    "tint": false
+  },
+  "fluor": {
+    "glow": 3.0,
+    "rainbow_bombs": true
+  },
+  "stats": {
+    "board": true
+  },
+  "overhead": {
+    "row": 2.4
   }
 }
